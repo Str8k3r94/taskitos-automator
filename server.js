@@ -89,13 +89,14 @@ class TaskScheduler {
         this.setupScheduler();
     }
 
-    loadConfig() {
-        this.config = JSON.parse(localStorage.getItem('taskitosConfig');
-        this.config = savedConfig ? JSON.parse(savedConfig) : {
-            days: [1, 3, 5], // Seg, Qua, Sex padrão
-            time: "19:00"
-        };
-    }
+   loadConfig() {
+    const savedConfig = localStorage.getItem('taskitosConfig');
+    this.config = savedConfig ? JSON.parse(savedConfig) : {
+        days: [1, 3, 5], // Seg, Qua, Sex padrão
+        time: "19:00"
+    };
+}
+
 
     setupScheduler() {
         // Verifica diariamente se precisa executar
@@ -117,8 +118,10 @@ class TaskScheduler {
     }
 
     async executeAutomation() {
-        const config = JSON.parse(localStorage.getItem('taskitosCredentials'));
-        if (!config) return;
+         const savedCreds = localStorage.getItem('taskitosCredentials');
+    if (!savedCreds) return; // nada salvo ainda
+
+         const config = JSON.parse(savedCreds);
         
         try {
             const browser = await puppeteer.launch();
