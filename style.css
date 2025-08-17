@@ -1,0 +1,77 @@
+
+:root {
+    --primary: #4a6fa5;
+    --secondary: #6b8cae;
+    --background: #f5f7fa;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--background);
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.control-panel {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input, button {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+button {
+    background: var(--primary);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: var(--secondary);
+}
+
+.log-container {
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 6px;
+    background: #fafafa;
+}
+
+#logOutput {
+    height: 200px;
+    overflow-y: auto;
+    background: #1e1e1e;
+    color: #00ff00;
+    padding: 10px;
+    font-family: monospace;
+    border-radius: 4px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #666;
+    font-size: 0.9em;
+}

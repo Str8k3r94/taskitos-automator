@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatizador Taskitos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Automatizador Taskitos</h1>
+        
+        <div class="control-panel">
+            <div class="form-group">
+                <label for="ra">RA Completo:</label>
+                <input type="text" id="ra" placeholder="1234567sp">
+            </div>
+            
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha">
+            </div>
+            
+            <div class="form-group">
+                <label for="tempo">Tempo (minutos):</label>
+                <input type="number" id="tempo" value="7" min="1">
+            </div>
+            
+            <button id="btnStart">▶ Iniciar Automação</button>
+        </div>
+        
+        <div class="log-container">
+            <h3>📜 Registro de Atividades</h3>
+            <div id="logOutput"></div>
+        </div>
+    </div>
+
+    <footer>by Joxx • v3.0 • Sistema Completo</footer>
+    <script src="script.js"></script>
+</body>
+</html>
