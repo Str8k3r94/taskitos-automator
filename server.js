@@ -135,3 +135,6 @@ new TaskScheduler();
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
+
+const { LocalStorage } = require('node-localstorage');
+const localStorage = new LocalStorage('./scratch'); // pasta onde salva os dados
