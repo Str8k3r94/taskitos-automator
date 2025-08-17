@@ -138,3 +138,6 @@ app.listen(PORT, () => {
 
 const { LocalStorage } = require('node-localstorage');
 const localStorage = new LocalStorage('./scratch'); // pasta onde salva os dados
+
+localStorage.setItem("user", "teste");
+console.log(localStorage.getItem("user"));
