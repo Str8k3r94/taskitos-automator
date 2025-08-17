@@ -90,7 +90,8 @@ class TaskScheduler {
     }
 
     loadConfig() {
-        this.config = JSON.parse(localStorage.getItem('taskitosConfig')) || {
+        this.config = JSON.parse(localStorage.getItem('taskitosConfig');
+        this.config = savedConfig ? JSON.parse(savedConfig) : {
             days: [1, 3, 5], // Seg, Qua, Sex padrão
             time: "19:00"
         };
