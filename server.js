@@ -89,28 +89,27 @@ class TaskScheduler {
         this.setupScheduler();
     }
 
-   loadConfig() {
-    const savedConfig = localStorage.getItem('taskitosConfig');
-    this.config = savedConfig ? JSON.parse(savedConfig) : {
-        days: [1, 3, 5], // Seg, Qua, Sex padrão
-        time: "19:00"
-    };
-}
-
+    loadConfig() {
+        const savedConfig = localStorage.getItem('taskitosConfig');
+        this.config = savedConfig ? JSON.parse(savedConfig) : {
+            days: [1, 3, 5], // Seg, Qua, Sex padrão
+            time: "19:00"
+        };
+    }
 
     setupScheduler() {
         // Verifica diariamente se precisa executar
         setInterval(() => {
             const now = new Date();
             const [hours, minutes] = this.config.time.split(':');
-            
+
             // Verifica se é um dia agendado
             const shouldRunToday = this.config.days.includes(now.getDay());
-            
+
             // Verifica horário
             const isTime = now.getHours() === parseInt(hours) && 
-                          now.getMinutes() === parseInt(minutes);
-            
+                           now.getMinutes() === parseInt(minutes);
+
             if (shouldRunToday && isTime) {
                 this.executeAutomation();
             }
@@ -118,20 +117,20 @@ class TaskScheduler {
     }
 
     async executeAutomation() {
-         const savedCreds = localStorage.getItem('taskitosCredentials');
-    if (!savedCreds) return; // nada salvo ainda
+        const savedCreds = localStorage.getItem('taskitosCredentials');
+        if (!savedCreds) return; // nada salvo ainda
 
-         const config = JSON.parse(savedCreds);
-        
+        const config = JSON.parse(savedCreds);
+
         try {
             const browser = await puppeteer.launch();
             const page = await browser.newPage();
-            
+
             await page.goto('https://taskitos.cupiditys.lol/');
             await page.type('#studentId', config.ra);
             await page.type('#password', config.senha);
             await page.click('#loginButton');
-            
+
             // ... (processo de automação completo)
             
             await browser.close();
