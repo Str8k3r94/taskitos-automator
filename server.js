@@ -129,4 +129,9 @@ class TaskScheduler {
 }
 
 // Inicializa junto com o servidor
+
 new TaskScheduler();
+
+app.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
