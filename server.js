@@ -110,10 +110,12 @@ class TaskScheduler {
             const browser = await puppeteer.launch({ headless: true });
             const page = await browser.newPage();
 
-            await page.goto('https://taskitos.cupiditys.lol/');
-            await page.type('#studentId', config.ra);
-            await page.type('#password', config.senha);
-            await page.click('#loginButton');
+           await page.goto('https://taskitos.cupiditys.lol/', { waitUntil: 'networkidle2' });
+
+           await page.type('#studentId', ra, { delay: 50 });
+await page.type('#password', senha, { delay: 50 });
+
+            await page.click('#loginNormal');  // ou '#loginOverdue' se for o caso
 
             await safeNavigate(page, '#loginNormal', '#loginOverdue');
 
