@@ -45,7 +45,19 @@ app.post('/api/automate', async (req, res) => {
         await page.click('#loginButton');
 
         // 2. Navegação (com fallback)
-       await safeNavigate(page, '#loginNormal', '#loginOverdue');
+       async function safeNavigate(page, primarySelector, fallbackSelector) {
+    try {
+        if (await page.$(primarySelector)) {
+            await page.click(primarySelector);
+        } else if (await page.$(fallbackSelector)) {
+            await page.click(fallbackSelector);
+        } else {
+            console.log("Nenhum dos seletores foi encontrado, continuando...");
+        }
+    } catch (err) {
+        console.log("Erro no safeNavigate:", err.message);
+    }
+}
 
 
         // 3. Execução das tarefas
