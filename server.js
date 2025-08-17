@@ -79,6 +79,9 @@ async function safeNavigate(page, primarySelector, fallbackSelector) {
 
 // ... (código anterior mantido)
 
+
+
+
 // Novo módulo de agendamento
 class TaskScheduler {
     constructor() {
