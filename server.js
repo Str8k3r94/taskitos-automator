@@ -52,7 +52,7 @@ app.post('/api/automate', async (req, res) => {
         await page.goto('https://taskitos.cupiditys.lol/');
         await page.type('#studentId', ra);
         await page.type('#password', senha);
-        await page.click('#loginButton');
+        await page.click('#loginNormal');
 
         // 2. Continua a navegação (com fallback)
         await safeNavigate(page, '#loginNormal', '#loginOverdue');
@@ -101,32 +101,60 @@ class TaskScheduler {
     }
 
     async executeAutomation() {
-        const savedCreds = localStorage.getItem('taskitosCredentials');
+        const savedCreds = localStorage.getItem('taskitosConfig');
         if (!savedCreds) return;
-
-        const config = JSON.parse(savedCreds);
-
-        try {
-            const browser = await puppeteer.launch({ headless: true });
-            const page = await browser.newPage();
-
-           await page.goto('https://taskitos.cupiditys.lol/', { waitUntil: 'networkidle2' });
-
-           await page.type('#studentId', ra, { delay: 50 });
-await page.type('#password', senha, { delay: 50 });
-
-            await page.click('#loginNormal');  // ou '#loginOverdue' se for o caso
-
-            await safeNavigate(page, '#loginNormal', '#loginOverdue');
-
-            // TODO: mesma lógica de automação daqui
-
-            await browser.close();
-        } catch (error) {
-            console.error('Erro na execução automática:', error);
-        }
+        // resto da automação...
     }
-}
+} // <-- ESTA CHAVE FINAL FECHA A CLASSE
+
+       
+
+    const config = JSON.parse(savedCreds);
+
+    try {
+        const browser = await puppeteer.launch({ headless: false });
+        const page = await browser.newPage();
+
+        // Vai para a página de login
+        await page.goto('https://taskitos.cupiditys.lol/', { waitUntil: 'networkidle2' });
+
+        // Preenche RA e senha (corrigido)
+        await page.type('#studentId', config.ra, { delay: 50 });
+        await page.type('#password', config.senha, { delay: 50 });
+
+        // --- Captcha (se for reCAPTCHA real, isso não resolve totalmente) ---
+        try {
+            const frames = page.frames();
+            const recaptchaFrame = frames.find(frame => frame.url().includes("recaptcha"));
+            if (recaptchaFrame) {
+                const checkbox = await recaptchaFrame.$('.recaptcha-checkbox-border');
+                if (checkbox) {
+                    await checkbox.click();
+                    console.log("Tentou clicar no reCAPTCHA.");
+                    await page.waitForTimeout(2000);
+                }
+            }
+        } catch (err) {
+            console.log("Erro ao tentar clicar no reCAPTCHA:", err.message);
+        }
+
+        // Clica no botão de login
+        await page.waitForSelector('#loginNormal');
+        await page.click('#loginNormal');
+
+        console.log("Login executado!");
+
+        // Continuação da navegação
+        await safeNavigate(page, '#loginNormal', '#loginOverdue');
+
+        // TODO: mesma lógica de automação daqui
+
+        await browser.close();
+    } catch (error) {
+        console.error('Erro na execução automática:', error);
+    }
+
+
 
 // inicializa agendamento
 new TaskScheduler();
