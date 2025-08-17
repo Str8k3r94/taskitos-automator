@@ -45,7 +45,8 @@ app.post('/api/automate', async (req, res) => {
         await page.click('#loginButton');
 
         // 2. Navegação (com fallback)
-        await this.safeNavigate(page, '#loginNormal', '#loginOverdue');
+       await safeNavigate(page, '#loginNormal', '#loginOverdue');
+
 
         // 3. Execução das tarefas
         await page.waitForSelector('#startAllActivities', { timeout: 15000 });
