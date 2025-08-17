@@ -4,9 +4,10 @@ const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 puppeteer.use(StealthPlugin());
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
+
+
+const { LocalStorage } = require('node-localstorage');
+const localStorage = new LocalStorage('./scratch'); // pasta onde salva os dados
 
 
 const app = express();
@@ -73,7 +74,7 @@ async function safeNavigate(page, primarySelector, fallbackSelector) {
     }
 }
 
-app.listen(PORT, () => console.log(`Servidor rodando em http://localhost:${PORT}`));
+
 
 
 // ... (código anterior mantido)
@@ -140,12 +141,5 @@ app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
 
-const { LocalStorage } = require('node-localstorage');
-const localStorage = new LocalStorage('./scratch'); // pasta onde salva os dados
 
-localStorage.setItem("user", "teste");
-console.log(localStorage.getItem("user"));
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
