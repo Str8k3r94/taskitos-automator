@@ -1,23 +1,24 @@
 
-document.getElementById('btnStart').addEventListener('click', async () => {
+async function iniciarAutomacao() {
     const ra = document.getElementById('ra').value;
     const senha = document.getElementById('senha').value;
     const tempo = document.getElementById('tempo').value;
-    
-    const log = document.getElementById('logOutput');
-    log.innerHTML += `<div>[${new Date().toLocaleTimeString()}] Iniciando...</div>`;
-    
+
     try {
-        const response = await fetch('/api/automate', {
+        const response = await fetch('/save-config', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ra, senha, tempo })
+            body: JSON.stringify({ 
+                ra, 
+                senha, 
+                tempoMin: tempo, 
+                tempoMax: tempo 
+            })
         });
-        
+
         const result = await response.json();
-        const status = result.success ? '✅ Sucesso' : '❌ Falha';
-        log.innerHTML += `<div>[${new Date().toLocaleTimeString()}] ${status}: ${result.message || ''}</div>`;
-    } catch (error) {
-        log.innerHTML += `<div>[${new Date().toLocaleTimeString()}] 💥 Erro: ${error.message}</div>`;
+        log(`✅ ${result.message}`);
+    } catch (err) {
+        log(`❌ Erro: ${err.message}`);
     }
-});
+}
