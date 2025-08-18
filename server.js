@@ -102,7 +102,6 @@ app.post('/save-config', (req, res) => {
     res.json({ success: true, message: 'Configurações salvas com sucesso!' });
 });
 
-
 // ===================
 // INICIALIZA AGENDAMENTO
 // ===================
