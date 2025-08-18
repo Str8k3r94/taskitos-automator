@@ -94,12 +94,14 @@ class TaskScheduler {
 app.post('/save-config', (req, res) => {
     const { ra, senha, tempoMin, tempoMax } = req.body;
     if (!ra || !senha || !tempoMin || !tempoMax) {
-        return res.status(400).send('Campos obrigatórios faltando');
+        return res.status(400).json({ success: false, message: 'Campos obrigatórios faltando' });
     }
 
     global.savedCreds = JSON.stringify({ ra, senha, tempoMin, tempoMax });
-    res.json('Configurações salvas com sucesso!');
+
+    res.json({ success: true, message: 'Configurações salvas com sucesso!' });
 });
+
 
 // ===================
 // INICIALIZA AGENDAMENTO
