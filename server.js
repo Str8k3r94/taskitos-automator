@@ -98,7 +98,7 @@ app.post('/save-config', (req, res) => {
     }
 
     global.savedCreds = JSON.stringify({ ra, senha, tempoMin, tempoMax });
-    res.send('Configurações salvas com sucesso!');
+    res.json('Configurações salvas com sucesso!');
 });
 
 // ===================
