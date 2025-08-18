@@ -100,14 +100,9 @@ class TaskScheduler {
         }, 60000); // checa a cada minuto
     }
 
-    async executeAutomation() {
-        const savedCreds = localStorage.getItem('taskitosConfig');
-        if (!savedCreds) return;
-        // resto da automação...
-    }
-} // <-- ESTA CHAVE FINAL FECHA A CLASSE
-
-       
+   async executeAutomation() {
+    const savedCreds = localStorage.getItem('taskitosCredentials');
+    if (!savedCreds) return;
 
     const config = JSON.parse(savedCreds);
 
@@ -118,11 +113,11 @@ class TaskScheduler {
         // Vai para a página de login
         await page.goto('https://taskitos.cupiditys.lol/', { waitUntil: 'networkidle2' });
 
-        // Preenche RA e senha (corrigido)
+        // Preenche RA e senha
         await page.type('#studentId', config.ra, { delay: 50 });
         await page.type('#password', config.senha, { delay: 50 });
 
-        // --- Captcha (se for reCAPTCHA real, isso não resolve totalmente) ---
+        // --- Captcha (se for só checkbox, tenta clicar) ---
         try {
             const frames = page.frames();
             const recaptchaFrame = frames.find(frame => frame.url().includes("recaptcha"));
@@ -144,16 +139,16 @@ class TaskScheduler {
 
         console.log("Login executado!");
 
-        // Continuação da navegação
+        // Continua navegação
         await safeNavigate(page, '#loginNormal', '#loginOverdue');
-
-        // TODO: mesma lógica de automação daqui
 
         await browser.close();
     } catch (error) {
         console.error('Erro na execução automática:', error);
     }
+}
 
+}
 
 
 // inicializa agendamento
